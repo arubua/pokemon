@@ -2,75 +2,55 @@ import { Box, Heading, Text, Button } from "@chakra-ui/react";
 import NextImage from "next/image";
 
 import { SEO } from "../components/seo";
+import PokeList from "../components/PokeList";
 
-const Home = () => (
+
+async function getPokemon(){
+  const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+   const json = await res.json()
+  return Object.entries(json)
+}
+
+async function getPokemonData(pokemon) {
+  const pokemonData = await Promise.all(
+    pokemon[3][1].map(async (item) => {
+      let url =  item.url
+      const res = await fetch(url)
+      const json = await res.json()
+      return json
+    })
+  )
+
+  return pokemonData
+}
+
+// This function gets called at build time
+export async function getStaticProps() {
+  const pokemon = await getPokemon()
+  console.log(pokemon)
+  
+  const pokemonData = await getPokemonData(pokemon)
+  
+
+
+  // By returning { props: { pokemon } }, the Home component
+  // will receive `pokemon` as a prop at build time
+  return {
+    props: {
+      pokemon,
+      pokemonData
+    },
+  };
+}
+
+
+  
+
+const Home = ({pokemon,pokemonData}) => (
   <>
-    <SEO title="Home" />
+    <SEO title="Pokemon" />
 
-    <Box
-      as="section"
-      maxW="1440px"
-      py="4"
-      px={[4, 6, 10, 14, 20]}
-      mx="auto"
-      display="flex"
-      flexDir={{ base: "column-reverse", lg: "row" }}
-      justifyContent={{ base: "center", lg: "space-between" }}
-      alignItems="center"
-      textAlign={{ base: "center", lg: "left" }}
-    >
-      <Box pr={{ lg: "4" }} maxW={{ base: "90%", lg: "50%" }}>
-        <Heading
-          as="h1"
-          fontSize={{ base: "1.5rem", sm: "2rem", lg: "3rem" }}
-          fontWeight="800"
-        >
-          Help your team for tracking projects better.
-        </Heading>
-        <Text fontWeight="400" pt="4" pb="10">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore atque
-          perspiciatis qui ex ducimus nesciunt et nam. In amet earum optio cum
-          aperiam autem, possimus vero voluptates! Laboriosam, possimus
-          aspernatur.
-        </Text>
-        <Box
-          display="flex"
-          justifyContent={{ base: "center", lg: "flex-start" }}
-          alignItems="center"
-          flexDir={{ base: "column", lg: "row" }}
-        >
-          <Button
-            colorScheme="facebook"
-            variant="solid"
-            mb="2"
-            mr={{ lg: "5" }}
-            fontWeight="600"
-            size="lg"
-          >
-            Create new account
-          </Button>
-          <Button
-            colorScheme="facebook"
-            variant="outline"
-            mb="2"
-            px="12"
-            fontWeight="600"
-            size="lg"
-          >
-            Login
-          </Button>
-        </Box>
-      </Box>
-      <Box maxW={{ base: "xl", lg: "auto" }}>
-        <NextImage
-          src="/team-bro.png"
-          width="600"
-          height="600"
-          alt="team"
-          priority
-        />
-      </Box>
-    </Box>
+   <PokeList pokemonData={pokemonData} pokemon={pokemon}/> 
   </>
 );
 

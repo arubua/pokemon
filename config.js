@@ -1,10 +1,10 @@
 export default {
-  title: "Next.js Chakra UI Template",
-  description: "A starter Template for Next.js with Chakra UI.",
+  title: "Pokemon",
+  description: "Get a preview of your favorite pokemon",
 };
 
-export const links = [
-  { title: "Home", path: "/" },
-  { title: "About", path: "/About" },
-  { title: "Contact", path: "/contact" },
-];
+// export const links = [
+//   { title: "Home", path: "/" },
+//   { title: "About", path: "/About" },
+//   { title: "Contact", path: "/contact" },
+// ];

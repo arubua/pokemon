@@ -18,11 +18,11 @@ const Navbar = () => {
         flexDir={{ base: "row-reverse", lg: "row" }}
         alignItems="center"
       >
-        <HamburgerMenu toggled={isOpen} toggle={setIsOpen} />
+        {/* <HamburgerMenu toggled={isOpen} toggle={setIsOpen} />
         <Box
           as="ul"
           fontWeight="600"
-          bg={{ base: "telegram.700", lg: "transparent" }}
+          bg={{ base: "#ffde00", lg: "transparent" }}
           display={{
             base: isOpen ? "block" : "none",
             lg: "flex",
@@ -39,7 +39,7 @@ const Navbar = () => {
           zIndex="2"
         >
           <Links onClick={() => setIsOpen(false)} />
-        </Box>
+        </Box> */}
 
         <DarkModeToggle onClick={toggleColorMode} colorMode={colorMode} />
       </Box>

@@ -5,7 +5,7 @@ import { links } from "../../../config";
 
 const Links = ({ onClick }) => (
   <>
-    {links.map((link) => (
+    {links ? links.map((link) => (
       <Box
         as="li"
         listStyleType="none"
@@ -19,7 +19,7 @@ const Links = ({ onClick }) => (
           </chakra.a>
         </NextLink>
       </Box>
-    ))}
+    )) : null}
   </>
 );
 
